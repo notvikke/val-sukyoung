@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Sukyoung 💖</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div class="background-pattern"></div>
+    <div class="container">
+        <div class="card">
+            <h1 id="question">수경, will you be my Valentine?</h1>
+            <div class="image-container">
+                <img id="main-image" src="main_shinchan.png" alt="Cute Shin-chan">
+            </div>
+            <div class="buttons">
+                <button id="yes-btn" class="btn btn-yes">Yes 💖</button>
+                <button id="no-btn" class="btn btn-no">No</button>
+            </div>
+            <!-- View Memories Button (Hidden initially) -->
+            <button id="view-memories-btn" class="btn btn-memories hidden" style="margin-top: 20px;">📸 View Memories
+                📸</button>
+        </div>
+    </div>
+    <!-- Music Toggle -->
+    <!-- Music Toggle -->
+    <div class="music-wrapper">
+        <span class="music-label">Debí Tirar Más Fotos 🎶</span>
+        <div id="music-toggle" class="music-btn">
+            🎵
+        </div>
+    </div>
+    <audio id="bg-music" loop autoplay>
+        <!-- User requested song: "Debí Tirar Más Fotos" (DtMF) -->
+        <source src="dtmf.mp3" type="audio/mpeg">
+        <!-- Fallback placeholder -->
+        <source src="https://assets.mixkit.co/active_storage/sfx/1114/1114-preview.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Polaroid Gallery (Hidden initially) -->
+    <div id="gallery" class="gallery hidden">
+        <button id="close-gallery-btn" class="close-btn">✖ Close</button>
+        <div class="polaroid p1">
+            <img src="photo1.jpg" alt="Memory 1">
+        </div>
+        <div class="polaroid p2">
+            <img src="photo2.jpg" alt="Memory 2">
+        </div>
+        <div class="polaroid p3">
+            <img src="photo3.jpg" alt="Memory 3">
+        </div>
+        <div class="caption">Collecting memories with you is my favorite hobby. 💖</div>
+    </div>
+
+    <!-- Shiro Helper (Hidden initially) -->
+    <div id="shiro-helper" class="shiro-container hidden">
+        <div class="speech-bubble">수경 공주님... Yes 눌러주세요! ☁️</div>
+        <img src="cat_helper.png" class="shiro-img" alt="Helper Cat">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

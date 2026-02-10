@@ -1,0 +1,12 @@
+# Ignore backups
+backup_r1/
+*.bak
+
+# System files
+thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/

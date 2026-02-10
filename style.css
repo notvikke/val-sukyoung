@@ -1,0 +1,483 @@
+:root {
+    --bg-color: #ffe4e1;
+    --text-color: #5d4037;
+    --btn-blue: #40c4ff;
+    --btn-blue-hover: #00b0ff;
+    --btn-red: #ff5252;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none !important;
+}
+
+body {
+    font-family: 'Jua', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+    /* Prevent scrolling when button jumps */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('bg_pattern.png');
+    background-repeat: repeat;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(93, 64, 55, 0.15);
+    backdrop-filter: blur(5px);
+    border: 3px solid #ffcdd2;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    line-height: 1.2;
+}
+
+.image-container {
+    margin-bottom: 2rem;
+    height: 300px;
+    /* Fixed height to prevent layout shifts */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.image-container img:hover {
+    transform: scale(1.05);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    /* Context for absolute positioning if needed inside, but we use fixed for chaos */
+    min-height: 60px;
+}
+
+.btn {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.5rem;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-yes {
+    background-color: var(--btn-blue);
+    color: var(--white);
+}
+
+.btn-yes:hover {
+    background-color: var(--btn-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-no {
+    background-color: var(--white);
+    color: var(--btn-red);
+    border: 2px solid var(--btn-red);
+}
+
+/* Chaos Mode Styles */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.floating-emoji {
+    position: fixed;
+    font-size: 2rem;
+    pointer-events: none;
+    animation: floatUp 1s ease-out forwards;
+    z-index: 100;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .image-container {
+        height: 200px;
+    }
+
+    .btn {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+}
+
+/* --- Phase 2: Music Toggle --- */
+/* --- Phase 2: Music Toggle --- */
+.music-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 2000;
+}
+
+.music-btn {
+    /* position: fixed; Removed in favor of wrapper */
+    /* top: 20px; */
+    /* right: 20px; */
+    background: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.music-label {
+    font-family: 'Jua', sans-serif;
+    color: #5d4037;
+    /* Match text color */
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+/* Show label on hover or when playing (active class to be added via JS if desired, 
+   but for now let's show it on hover of wrapper or always? User said "add the name", 
+   usually implies visible. Let's make it visible.) */
+.music-label {
+    opacity: 1;
+    /* Make visible by default as per request */
+    transform: translateX(0);
+}
+
+.music-btn:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* --- Phase 2: Polaroid Gallery --- */
+.gallery {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 20px;
+    z-index: 100;
+    /* Above confirmation card if needed, or hide card */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    flex-wrap: wrap;
+    /* For mobile */
+    justify-content: center;
+    width: 90%;
+    max-width: 800px;
+}
+
+.gallery.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.polaroid {
+    overflow: hidden;
+    /* Clip the zoomed image */
+    background: #fff;
+    padding: 15px 15px 40px 15px;
+    box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.2);
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+    width: 200px;
+    /* Fixed width for desktop */
+    position: relative;
+    z-index: 10;
+}
+
+.polaroid:hover {
+    transform: scale(1.1) rotate(0deg) !important;
+    z-index: 101;
+}
+
+.polaroid img {
+    width: 100%;
+    height: 220px;
+    /* Fixed height for consistency */
+    display: block;
+    border: 1px solid #eee;
+    object-fit: cover;
+    /* Crop to fill */
+    /* object-position is now handled per-image */
+    transform: scale(2.5);
+    /* Zoom in to hide surrounding thumbnails */
+    transition: transform 0.3s ease;
+}
+
+.polaroid:hover img {
+    transform: scale(2.8);
+    /* Slight zoom on hover */
+}
+
+/* Rotations & Specific Cropping */
+.p1 {
+    transform: rotate(-5deg);
+}
+
+.p1 img {
+    object-position: center 40%;
+}
+
+/* User liked this */
+
+.p2 {
+    transform: rotate(3deg);
+}
+
+.p2 img {
+    object-position: center 20%;
+    /* Shift down to hide top UI */
+}
+
+.p3 {
+    transform: rotate(-3deg);
+}
+
+.p3 img {
+    object-position: center 40%;
+}
+
+/* User liked this */
+
+.caption {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    font-family: 'Jua', sans-serif;
+}
+
+/* --- Phase 2: Shiro Helper --- */
+.shiro-container {
+    position: fixed;
+    bottom: -200px;
+    /* Hidden below screen */
+    right: 20px;
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 500;
+    text-align: center;
+}
+
+.shiro-container.visible {
+    bottom: 20px;
+}
+
+.speech-bubble {
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 20px;
+    position: relative;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Jua', sans-serif;
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: 40px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+}
+
+.shiro-img {
+    width: 120px;
+    height: auto;
+    border-radius: 15px;
+    border: 3px solid #fff;
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+    /* font-size: 80px; Removed emoji size */
+}
+
+/* Mobile Adjustments for Gallery */
+@media (max-width: 768px) {
+    .gallery {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        top: 60%;
+        /* Shift down a bit */
+    }
+
+    .polaroid {
+        width: 150px;
+        padding: 10px 10px 30px 10px;
+    }
+
+    .caption {
+        font-size: 1.2rem;
+    }
+}
+
+/* --- Phase 2.5: Gallery Manual Trigger & Polish --- */
+.btn-memories {
+    background-color: #ff9800;
+    /* Orange/Gold for memories */
+    color: #fff;
+    margin-top: 20px;
+    z-index: 50;
+    /* Ensure clickable */
+    position: relative;
+    animation: pulse 2s infinite;
+}
+
+.btn-memories:hover {
+    background-color: #f57c00;
+    transform: scale(1.05);
+}
+
+.close-btn {
+    position: absolute;
+    top: -40px;
+    /* Above the gallery */
+    right: 0;
+    background: #ff5252;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-family: 'Jua', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+    z-index: 200;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+    background: #d32f2f;
+}
+
+.caption {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    /* Updated color for visibility */
+    color: #5d4037;
+    /* Dark brown to match other text */
+    background: rgba(255, 255, 255, 0.85);
+    /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-shadow: none;
+    /* Remove shadow as we have background now */
+    margin-top: 20px;
+    font-family: 'Jua', sans-serif;
+    z-index: 150;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 152, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+    }
+}
